@@ -1,0 +1,74 @@
+[python tools]
+#
+# hightime/tile_index_from_s_file.py
+#
+If you change "graphics/stageN_bg_tiles.bmp", reflect to "include/ht_stageN_tiles.h".
+
+Before using, build resource files (under graphics).
+Execute "python ./tile_index_from_s_file.py ./build/stageN_bg_tiles_bn_gfx.s".
+Copy output strings "#define ~", and paste to "include/ht_stageN_tiles.h".
+
+#
+# hightime/media_temp/pict/tmx2init_data.py
+#
+If you change "front_layer" or "object_layer" in "media_temp/pict/stageN_N.tmx", reflect to "src/ht_stageN_N.cpp.h" or "src/ht_stageN.cpp".
+
+cd "media_temp/pict"
+Execute "python ./tmx2init_data.py ./stageN_N.tmx"
+Copy and Paste as follows:
+"hero_pos:"     -> function "bn::fixed_point stageN::get_hero_start_pos()" in "src/ht_stageN.cpp"
+"goal_region:"  -> function "bn::fixed_rect stageN::get_goal_region()" in "src/ht_stageN.cpp"
+"up stairs:"    -> "struct ht::stairs_init_data_t stairs_init_data[]" in "src/ht_stageN_N.cpp.h"
+                   change "FLOOR" number manualy.
+"down stairs:"  -> "struct ht::stairs_init_data_t stairs_init_data[]" in "src/ht_stageN_N.cpp.h"
+                   change "FLOOR" number manualy.
+"teleport:"     -> "struct ht::teleport_init_data_t teleport_init_data[]" in "src/ht_stageN_N.cpp.h"
+                   change "FLOOR" number and "X,Y" points manualy.
+"left gate:"    -> "struct ht::gate_init_data_t gate_init_data[]" in "src/ht_stageN_N.cpp.h"
+"right gate:"   -> "struct ht::gate_init_data_t gate_init_data[]" in "src/ht_stageN_N.cpp.h"
+"up gate:"      -> "struct ht::gate_init_data_t gate_init_data[]" in "src/ht_stageN_N.cpp.h"
+"down gate:"    -> "struct ht::gate_init_data_t gate_init_data[]" in "src/ht_stageN_N.cpp.h"
+"item key:"     -> "struct ht::item_key_init_data_t item_key_init_data[]" in "src/ht_stageN_N.cpp.h"
+"enemy:"        -> right below "struct stageN_N_static_data {" in "src/ht_stageN_N.cpp.h"
+"object tile indexes" -> "struct ht::bg_map_manager::init_data_t bg_map_init_data[]" in "src/ht_stageN_N.cpp.h"
+"terrain:"      -> "struct terrain_init_data_t terrain_init_data[]" in "src/ht_stageN_N.cpp.h"
+
+#
+# hightime/media_temp/pict/tmx2trace_data.py
+#
+If you change "area_layer" or "connect_layer" in "media_temp/pict/stageN_N.tmx", reflect to "src/ht_stageN_N.cpp.h".
+
+cd "media_temp/pict"
+Execute "python ./tmx2trace_data.py ./stageN_N.tmx"
+Copy output strings below "area: found. num=N",
+ and paste to the line under "struct trace_manager::area_init_data_t area_init_data ..." in "src/ht_stageN_N.cpp.h".
+Copy output strings below "connection: found. num=N",
+ and paste to the line under "struct trace_manager::connection_init_data_t connection_init_data ..." in "src/ht_stageN_N.cpp.h".
+
+[Tiled files]
+# media_temp/pict/stageN_N.tmx
+"base_layer"    -> floor tiles
+"back_layer"    -> tiles that don't collide like chairs
+"front_layer"   -> tiles that collide like walls
+"object_layer"  -> event tiles
+"area_layer"    -> a rectangular area bounded by walls 
+"connect_layer" -> boundaries between areas. information for tracking.
+
+"stageN_N.bmp" is made from "stageN_N.png".
+"stageN_N.png" is exported from "stageN_N.tmx".
+
+[Edit bmp files]
+Use usenti.exe
+-> https://www.gbadev.org/tools.php?showinfo=1441
+Save as "Bit depth: 4(16color)"
+
+[Edit music/sound files]
+# audio/*.xm
+Use MilkyTracker
+
+# audio/*.wav
+Use MilkyTracker for "media_temp/snd/*.xm"
+Save Song as ".wav"
+Convert format to "8bit 22050Hz"
+ -> sox input.wav -r 22050 -b 8 -c 1 output.wav
+

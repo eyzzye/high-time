@@ -1,0 +1,35 @@
+###########################################################
+#
+# high time
+#
+###########################################################
+First Release 2024/06/25
+
+[description]
+top view action game for GBA(Game Boy Advance)
+developed on mgba
+
+[build]
+1. install DevKitPro(DevKitARM)
+2. set environment variable(DEVKITARM/DEVKITPRO)
+3. download butano engine -> https://github.com/GValiente/butano
+   *developed on butano-8.0.0
+4. put "high-time" under "butano/games/"
+5. cd butano/games/hightime
+6. make
+
+[execute]
+# simple
+mgba ./high-time.gba
+
+# double the screen size
+mgba -2 ./high-time.gba
+
+# output log
+mgba -l 4 ./high-time.gba 
+
+[key controls]
+UP/DOWN/LEFT/RIGHT : Move
+
+[LICENSE]
+MIT License
